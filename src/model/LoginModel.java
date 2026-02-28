@@ -9,6 +9,7 @@ public class LoginModel {
     private String password;
     private OffsetDateTime lastLogged;
     private OffsetDateTime createdAt;
+    private boolean active;
 
     public LoginModel() {}
 
@@ -31,7 +32,13 @@ public class LoginModel {
     public String getPassword() { return password; }
     public OffsetDateTime getLastLogged() { return lastLogged; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
+    public boolean isActive() {
+        return active;
+    }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public void setId(Long id) { this.id = id; }
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }

@@ -4,19 +4,17 @@ public class PlayerModel {
 
     private Long id;
     private String displayName;
-    private boolean hasSaidUno;
 
     public PlayerModel() {}
 
-    public PlayerModel(String displayName, boolean hasSaidUno) {
+    public PlayerModel(String displayName) {
         this.displayName = displayName;
-        this.hasSaidUno = hasSaidUno;
     }
 
-    public PlayerModel(Long id, String displayName, boolean hasSaidUno) {
+
+    public PlayerModel(Long id, String displayName) {
         this.id = id;
         this.displayName = displayName;
-        this.hasSaidUno = hasSaidUno;
     }
 
     public Long getId() {
@@ -27,19 +25,11 @@ public class PlayerModel {
         return displayName;
     }
 
-    public boolean isHasSaidUno() {
-        return hasSaidUno;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public void setHasSaidUno(boolean hasSaidUno) {
-        this.hasSaidUno = hasSaidUno;
     }
 }

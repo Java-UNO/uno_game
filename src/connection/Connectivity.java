@@ -9,9 +9,6 @@ public class Connectivity {
         try {
             conn = DriverManager.getConnection(db.getDatabaseUrl(), db.getUsername(), db.getPassword());
             System.out.println("Connexion OK !");
-            System.out.println(conn);
-            conn.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

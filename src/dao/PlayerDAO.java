@@ -3,29 +3,60 @@ package dao;
 import model.PlayerModel;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import connection.Connectivity;
 
 public class PlayerDAO {
 
-    private Connection connection;
+    public PlayerDAO() {}
 
-    public PlayerDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    public boolean save(PlayerModel player) throws SQLException {
+    public boolean add(PlayerModel player) throws SQLException {
         String sql = "INSERT INTO player (display_name) VALUES (?)";
+        Statement stmt = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setString(1, player.getDisplayName());
-        int insert = stmt.executeUpdate();
-        return insert > 0;
+        try {
+            connection = Connectivity.getConnection();
+            stmt = connection.createStatement();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, player.getDisplayName());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if(preparedStatement != null) {preparedStatement.close();}
+            if(stmt != null) {stmt.close();}
+            if(connection != null) {connection.close();}
+        }
+        return false;
     }
 
-    public boolean delete(Long id) throws SQLException {
-        String sql = "DELETE FROM player WHERE id = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setLong(1, id);
-        int rowsAffected = stmt.executeUpdate();
-        return rowsAffected > 0;
+    public List<PlayerModel> findAll() throws SQLException {
+        List<PlayerModel> players = new ArrayList<>();
+        String sql = "SELECT * FROM player";
+        Statement stmt = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        try  {
+            connection = Connectivity.getConnection();
+            stmt = connection.createStatement();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                PlayerModel player = new PlayerModel();
+                player.setId(resultSet.getLong("id"));
+                player.setDisplayName(resultSet.getString("display_name"));
+                players.add(player);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return  players;
     }
 }
