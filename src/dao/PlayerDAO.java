@@ -59,4 +59,29 @@ public class PlayerDAO {
         }
         return  players;
     }
+    
+    public boolean update(PlayerModel player) throws SQLException {
+    String sql = "UPDATE player SET display_name = ? WHERE id = ?";
+    PreparedStatement preparedStatement = null;
+    Connection connection = null;
+
+    try {
+        connection = Connectivity.getConnection();
+        preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setString(1, player.getDisplayName());
+        preparedStatement.setLong(2, player.getId());
+
+        return preparedStatement.executeUpdate() > 0;
+
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        e.printStackTrace();
+    } finally {
+        if(preparedStatement != null) { preparedStatement.close(); }
+        if(connection != null) { connection.close(); }
+    }
+
+    return false;
+}
 }
