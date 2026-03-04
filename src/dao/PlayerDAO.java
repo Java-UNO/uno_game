@@ -80,8 +80,39 @@ public class PlayerDAO {
     } finally {
         if(preparedStatement != null) { preparedStatement.close(); }
         if(connection != null) { connection.close(); }
+        }
+
+        return false;
     }
 
-    return false;
-}
+    // DELETE 
+public int DeletePlayer(PlayerModel player) throws SQLException {
+
+    String sql = "DELETE public.player "
+            + "WHERE id=?";
+
+    Connection c = null;
+    PreparedStatement ps = null;
+    int rows = 0;
+
+    try {
+        c = Connectivity.getConnection();
+        ps = c.prepareStatement(sql);
+
+        ps.setLong(1, player.getId());
+
+        rows = ps.executeUpdate();
+
+    } catch (Exception e) {
+        System.out.println("Erreur = " + e.getMessage());
+    } finally {
+        if (ps != null) {
+            ps.close();
+        }
+        if (c != null) {
+            c.close();
+        }
+    }
+    return rows;
+    }
 }
