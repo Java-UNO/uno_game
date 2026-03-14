@@ -1,7 +1,7 @@
-package com.mycompany.poojdbc.dao;
+package dao;
 
-import com.mycompany.poojdbc.Connectivity;
-import com.mycompany.poojdbc.model.GameModel;
+import connection.Connectivity;
+import model.GameModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

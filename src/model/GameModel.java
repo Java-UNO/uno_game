@@ -1,4 +1,4 @@
-package com.mycompany.poojdbc.model;
+package model;
 
 import java.sql.Timestamp;
 
